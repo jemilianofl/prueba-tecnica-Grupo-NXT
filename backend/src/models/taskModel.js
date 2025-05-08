@@ -6,13 +6,13 @@ exports.findAll = async (userId, status) => {
     const values = [];
 
     if (userId) {
+        conditions.push('user_id = ?');
         values.push(userId);
-        conditions.push(`user_id = $${values.length}`);
     }
 
     if (status) {
+        conditions.push('status = ?');
         values.push(status);
-        conditions.push(`status = $${values.length}`);
     }
 
     if (conditions.length > 0) {
@@ -21,27 +21,39 @@ exports.findAll = async (userId, status) => {
 
     query += ' ORDER BY created_at DESC';
 
-    const result = await db.query(query, values);
-    return result.rows;
+    const [rows] = await db.query(query, values);
+    return rows;
 };
 
 exports.create = async ({ title, description, status, user_id }) => {
-    const result = await db.query(
-        'INSERT INTO tasks (title, description, status, user_id) VALUES ($1, $2, $3, $4) RETURNING *',
+    const [result] = await db.query(
+        'INSERT INTO tasks (title, description, status, user_id) VALUES (?, ?, ?, ?)',
         [title, description, status, user_id]
     );
-    return result.rows[0];
+
+    return {
+        id: result.insertId,
+        title,
+        description,
+        status,
+        user_id
+    };
 };
 
 exports.update = async (id, { title, description, status, user_id }) => {
-    const result = await db.query(
-        'UPDATE tasks SET title = $1, description = $2, status = $3, user_id = $4, updated_at = NOW() WHERE id = $5 RETURNING *',
+    const [result] = await db.query(
+        `UPDATE tasks 
+     SET title = ?, description = ?, status = ?, user_id = ?, updated_at = CURRENT_TIMESTAMP 
+     WHERE id = ?`,
         [title, description, status, user_id, id]
     );
-    return result.rows[0];
+
+    return result.affectedRows > 0
+        ? { id, title, description, status, user_id }
+        : null;
 };
 
 exports.delete = async (id) => {
-    const result = await db.query('DELETE FROM tasks WHERE id = $1', [id]);
-    return result.rowCount > 0;
+    const [result] = await db.query('DELETE FROM tasks WHERE id = ?', [id]);
+    return result.affectedRows > 0;
 };

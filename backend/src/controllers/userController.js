@@ -11,12 +11,15 @@ exports.getAllUsers = async (req, res) => {
 
 exports.createUser = async (req, res) => {
     const { name } = req.body;
+    console.log("Creando usuario con:", name); // <-- agregar esto
+
     if (!name) return res.status(400).json({ message: 'El nombre es obligatorio' });
 
     try {
         const user = await userModel.create(name);
         res.status(201).json(user);
-    } catch {
+    } catch (error) {
+        console.error("Error en createUser:", error); // <-- log de error
         res.status(500).json({ message: 'Error al crear usuario' });
     }
 };
