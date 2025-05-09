@@ -53,6 +53,7 @@ body {
 .nav-links {
     display: flex;
     gap: 1.2rem;
+    align-items: center;
 }
 
 .nav-links a {
@@ -66,6 +67,10 @@ body {
 
 .nav-links a:hover {
     background-color: rgba(255, 255, 255, 0.15);
+}
+
+.logout-button {
+    margin-left: 1rem;
 }
 
 button {
@@ -111,61 +116,56 @@ button.outline:hover {
     transform: translateY(-2px);
 }
 
-/* Estilos comunes para input, textarea y select para asegurar consistencia */
 input,
 textarea,
 select {
     width: 100%;
-    padding: 0.8rem 1rem; /* Padding consistente */
-    margin-bottom: 1.2rem; /* Margen inferior consistente */
+    padding: 0.8rem 1rem;
+    margin-bottom: 1.2rem;
     border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     background: rgba(255, 255, 255, 0.08);
-    color: #fff; /* Color de texto por defecto (antes de enfocar el select) */
-    font-family: inherit; /* Hereda la fuente global */
-    font-size: inherit; /* Hereda el tamaño de fuente global */
-    line-height: 1.6; /* Consistencia en la altura de línea, igual que el body */
+    color: #fff;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 1.6;
     transition: all 0.3s ease;
 }
 
-span {
-    color: #fff;
-    
+input::placeholder,
+textarea::placeholder {
+    color: rgba(255, 255, 255, 0.6);
 }
 
-/* Estilos para las opciones desplegables del select */
 select option {
-    color: #000; /* Texto negro para las opciones */
-    background: #fff; /* Fondo blanco para las opciones, mejora el contraste */
+    color: #000;
+    background: #fff;
 }
 
-/* Estilos para los campos cuando están enfocados (en uso) */
 input:focus,
 textarea:focus,
 select:focus {
     outline: none;
     border-color: rgba(110, 142, 251, 0.6);
     box-shadow: 0 0 0 2px rgba(110, 142, 251, 0.2);
-    /* Si quisieras que todos los campos tuvieran texto negro al enfocarlos,
-       añadirías 'color: #000;' aquí. Por ahora, solo el select lo hace específicamente. */
 }
 
-/* Específicamente para el texto del campo select (no las opciones) cuando está enfocado */
 select:focus {
-    color: #000; /* El texto dentro del campo select se vuelve negro */
+    color: #000;
 }
 
-/* Color para el texto de placeholder en inputs y textareas */
-input::placeholder,
-textarea::placeholder {
-    color: rgba(255, 255, 255, 0.6);
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 .task-item {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 1rem;
+    padding: 1.5rem;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 8px;
     margin-bottom: 1rem;
@@ -181,13 +181,22 @@ textarea::placeholder {
     flex-grow: 1;
 }
 
+.task-content p {
+    margin-bottom: 0.8rem;
+}
+
+.task-content span {
+    display: block;
+    margin-top: 0.4rem;
+}
+
 .task-actions {
     display: flex;
     gap: 0.5rem;
     align-items: center;
-    margin-left: 1rem; /* Da espacio si los botones están al lado del contenido */
+    margin-left: 1rem;
+    justify-content: flex-end;
 }
-
 
 .status {
     display: inline-block;
@@ -245,23 +254,24 @@ textarea::placeholder {
     }
 
     .task-content {
-        margin-bottom: 1rem; /* Espacio antes de los botones en móvil */
+        margin-bottom: 1rem;
     }
 
     .task-actions {
-        margin-top: 1rem; /* Ya lo tenías, solo para asegurar */
-        flex-direction: row; /* Los botones se mantienen en fila */
+        margin-top: 1rem;
+        flex-direction: row;
         width: 100%;
-        justify-content: flex-end; /* Alinea botones a la derecha, por ejemplo */
-        margin-left: 0; /* Resetea el margen izquierdo en móvil si es necesario */
+        justify-content: flex-end;
+        margin-left: 0;
     }
 
     .task-actions button {
-        flex-grow: 1; /* Hace que los botones se expandan para llenar el espacio */
+        flex-grow: 1;
         text-align: center;
     }
+
     .task-actions button:not(:last-child) {
-        margin-right: 0.5rem; /* Espacio entre botones */
+        margin-right: 0.5rem;
     }
 
     button {
