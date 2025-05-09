@@ -3,7 +3,7 @@ import { getToken } from '../utils/auth';
 
 const API = import.meta.env.VITE_API_URL;
 
-console.log('📦 API Base URL:', API);
+// console.log('📦 API Base URL:', API);
 
 const instance = axios.create({
     baseURL: API,
