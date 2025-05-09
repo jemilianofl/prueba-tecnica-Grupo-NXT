@@ -9,6 +9,11 @@ exports.signup = async (req, res) => {
 
     const hashed = await bcrypt.hash(password, 10);
 
+    const [[existingUser]] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
+    if (existingUser) {
+        return res.status(409).json({ message: 'El email ya está registrado' });
+    }
+
     try {
         const [result] = await db.query(
             'INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)',
