@@ -6,12 +6,14 @@ dotenv.config();
 
 const userRoutes = require('./src/routes/userRoutes');
 const taskRoutes = require('./src/routes/taskRoutes');
+const authRoutes = require('./src/routes/authRoutes');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
+app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/tasks', taskRoutes);
 

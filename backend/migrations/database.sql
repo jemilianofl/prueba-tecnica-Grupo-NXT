@@ -3,6 +3,8 @@ USE taskdb;
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
     name VARCHAR(100) NOT NULL
 );
 
