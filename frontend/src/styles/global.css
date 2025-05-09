@@ -16,9 +16,10 @@ body {
 .container {
     max-width: 900px;
     margin: auto;
+    animation: fadeIn 0.5s ease forwards;
 }
 
-.glass {
+.glass, .glass-card {
     background: rgba(255, 255, 255, 0.12);
     border-radius: 16px;
     padding: 2rem;
@@ -65,7 +66,6 @@ body {
 
 .nav-links a:hover {
     background-color: rgba(255, 255, 255, 0.15);
-    text-decoration: none;
 }
 
 button {
@@ -98,14 +98,12 @@ button.danger {
 
 button.danger:hover {
     background: linear-gradient(135deg, #f64f4f, #bb1a4d);
-    box-shadow: 0 6px 16px rgba(204, 43, 94, 0.4);
 }
 
 button.outline {
     background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.3);
     color: #fff;
-    box-shadow: none;
 }
 
 button.outline:hover {
@@ -113,54 +111,54 @@ button.outline:hover {
     transform: translateY(-2px);
 }
 
+/* Estilos comunes para input, textarea y select para asegurar consistencia */
 input,
 textarea,
 select {
     width: 100%;
-    padding: 0.8rem 1rem;
+    padding: 0.8rem 1rem; /* Padding consistente */
+    margin-bottom: 1.2rem; /* Margen inferior consistente */
     border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     background: rgba(255, 255, 255, 0.08);
-    color: #fff;
-    margin-bottom: 1.2rem;
+    color: #fff; /* Color de texto por defecto (antes de enfocar el select) */
+    font-family: inherit; /* Hereda la fuente global */
+    font-size: inherit; /* Hereda el tamaño de fuente global */
+    line-height: 1.6; /* Consistencia en la altura de línea, igual que el body */
     transition: all 0.3s ease;
 }
 
+span {
+    color: #fff;
+    
+}
+
+/* Estilos para las opciones desplegables del select */
+select option {
+    color: #000; /* Texto negro para las opciones */
+    background: #fff; /* Fondo blanco para las opciones, mejora el contraste */
+}
+
+/* Estilos para los campos cuando están enfocados (en uso) */
 input:focus,
 textarea:focus,
 select:focus {
     outline: none;
     border-color: rgba(110, 142, 251, 0.6);
     box-shadow: 0 0 0 2px rgba(110, 142, 251, 0.2);
+    /* Si quisieras que todos los campos tuvieran texto negro al enfocarlos,
+       añadirías 'color: #000;' aquí. Por ahora, solo el select lo hace específicamente. */
 }
 
+/* Específicamente para el texto del campo select (no las opciones) cuando está enfocado */
+select:focus {
+    color: #000; /* El texto dentro del campo select se vuelve negro */
+}
+
+/* Color para el texto de placeholder en inputs y textareas */
 input::placeholder,
 textarea::placeholder {
     color: rgba(255, 255, 255, 0.6);
-}
-
-select {
-    appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    background-size: 1.5em;
-    padding-right: 2.5rem;
-}
-
-select option {
-    background-color: #2b2453;
-    color: #fff;
-}
-
-.select {
-    position: relative;
-    width: 100%;
-}
-
-.select::after {
-    content: '';
-    pointer-events: none;
 }
 
 .task-item {
@@ -180,27 +178,16 @@ select option {
 }
 
 .task-content {
-    flex: 1;
-    padding-right: 1rem;
+    flex-grow: 1;
 }
 
 .task-actions {
     display: flex;
-    flex-direction: column;
     gap: 0.5rem;
+    align-items: center;
+    margin-left: 1rem; /* Da espacio si los botones están al lado del contenido */
 }
 
-.priority-high {
-    border-left: 4px solid #ff6b6b;
-}
-
-.priority-medium {
-    border-left: 4px solid #feca57;
-}
-
-.priority-low {
-    border-left: 4px solid #1dd1a1;
-}
 
 .status {
     display: inline-block;
@@ -209,6 +196,7 @@ select option {
     font-size: 0.8rem;
     font-weight: 500;
     margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .status-pending {
@@ -231,41 +219,51 @@ select option {
     to { opacity: 1; transform: translateY(0); }
 }
 
-.container {
-    animation: fadeIn 0.5s ease forwards;
-}
-
-/* Responsive adjustments */
 @media (max-width: 768px) {
     body {
         padding: 1rem;
     }
-    
-    .glass {
+
+    .glass, .glass-card {
         padding: 1.5rem;
     }
-    
+
     .header {
         flex-direction: column;
         align-items: flex-start;
         gap: 1rem;
     }
-    
+
     .nav-links {
         width: 100%;
-        justify-content: space-between;
+        justify-content: space-around;
     }
-    
+
     .task-item {
         flex-direction: column;
+        align-items: stretch;
     }
-    
+
+    .task-content {
+        margin-bottom: 1rem; /* Espacio antes de los botones en móvil */
+    }
+
     .task-actions {
-        margin-top: 1rem;
-        flex-direction: row;
+        margin-top: 1rem; /* Ya lo tenías, solo para asegurar */
+        flex-direction: row; /* Los botones se mantienen en fila */
         width: 100%;
+        justify-content: flex-end; /* Alinea botones a la derecha, por ejemplo */
+        margin-left: 0; /* Resetea el margen izquierdo en móvil si es necesario */
     }
-    
+
+    .task-actions button {
+        flex-grow: 1; /* Hace que los botones se expandan para llenar el espacio */
+        text-align: center;
+    }
+    .task-actions button:not(:last-child) {
+        margin-right: 0.5rem; /* Espacio entre botones */
+    }
+
     button {
         padding: 0.6rem 1rem;
     }

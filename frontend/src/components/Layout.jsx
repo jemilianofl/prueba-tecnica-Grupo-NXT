@@ -15,7 +15,7 @@ const Layout = ({ children }) => {
                         <>
                             <Link to="/">Tareas</Link>
                             <Link to="/crear">Crear Tarea</Link>
-                            <span style={{ color: '#fff' }}>Hola, {user?.name}</span>
+                            <span >Hola, {user?.name}</span>
                             <button onClick={logout} className="danger">Salir</button>
                         </>
                     ) : (
